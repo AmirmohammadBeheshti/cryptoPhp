@@ -63,6 +63,21 @@ body{
 .box-shadow{
     box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
 }
+.border-left{
+  border-left: 3px dotted var(--primary) !important;
+}
+.nav-title-font{
+  font-size: 18px !important;
+}
+.primart-text{
+  color : var(--primary)
+}
+.nav-item-size{
+  text-decoration: none !important;
+  color: white;
+  margin-right: 7px;
+  font-size: 14px !important;
+}
 .text-color{
     color : var(--textColor) !important;
 }

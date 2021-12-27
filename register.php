@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/style/bootstrap.css" />
     <link rel="stylesheet" href="./assets/style/style.css" />
-    <title>Amirmohammad Beheshti _ Login</title>
+    <title>Amirmohammad Beheshti _ Register</title>
 </head>
 
 <body>
