@@ -56,6 +56,7 @@ body{
     text-align: right;
     background-color : var(--backgroundColor);
     font-family: IRANSans;
+    color: white;
 }
 .cardColor {
     background-color : var(--cardColor) !important;

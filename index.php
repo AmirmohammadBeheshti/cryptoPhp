@@ -1,3 +1,40 @@
+<?php
+include('dbconfig.php');
+include('authenticateUser.php');
+
+
+$getUserId = $_COOKIE['userid'];
+$sql = function () use (&$getUserId) {
+    return "SELECT * FROM  `users` WHERE id=$getUserId";
+};
+
+
+// echo $nameValue;
+$finalSql = $sql();
+$getResult = $conn->query($finalSql);
+$username = '';
+$status = '';
+$userId = '';
+$name = '';
+$family = '';
+$birth = '';
+$i = 0;
+foreach ($getResult as $row) {
+    $i++;
+    $username =  $row['username'];
+    if ($row['isAdmin'] == true) {
+        $status = 'ادمین';
+    } else {
+        $status = 'کاربر';
+    }
+    $userId = $row['id'];
+    $birth = $row['birth'];
+    $name = $row['name'];
+    $family = $row['family'];
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,22 +70,37 @@
         <div class="card text-center d-block mr-auto ml-auto mt-5 cardColor shdow box-shadow text-white">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6 col-sm-12 col-xs-12 mt-5">
+                    <div class="col-md-6 col-sm-12 col-xs-12 ">
                         <span>نام : </span>
-                        <span class="primart-text">امیرمحمد </span>
+                        <span class="primart-text name_inpt"><?php echo $name ?> </span>
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12 mt-md-0 mt-5">
+                        <span>نام خانوادگی : </span>
+                        <span class="primart-text family_inpt"><?php echo $family ?> </span>
                     </div>
                     <div class="col-md-6 col-sm-12 col-xs-12 mt-5">
-                        <span>نام خانوادگی :</span>
-                        <span class="primart-text">امیرمحمد </span>
+                        <span>نام کاربری : </span>
+                        <span class="primart-text name_inpt"><?php echo $username ?> </span>
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12 mt-5">
+                        <span> وضعیت حساب :</span>
+                        <span class="primart-text family_inpt"><?php echo $status ?> </span>
                     </div>
                     <div class="col-md-6 col-sm-12 col-xs-12 mt-5">
                         <span>شماره کاربری :</span>
-                        <span class="primart-text">541564564 </span>
+                        <span class="primart-text phone_inpt"><?php echo $userId ?> </span>
                     </div>
                     <div class="col-md-6 col-sm-12 col-xs-12 mt-5">
-                        <span>جنسیت :</span>
-                        <span class="primart-text">زن </span>
+                        <span>تاریخ تولد : </span>
+                        <span class="primart-text gender_inpt"><?php echo $birth ?> </span>
                     </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12 mt-5">
+                        <a href="add_order.php" class="btn btn-success w-100">ثبت سفارش</a>
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12 mt-5">
+                        <a href="wallet.php" class="btn btn-primary w-100">کیف پول</a>
+                    </div>
+
                 </div>
             </div>
         </div>
