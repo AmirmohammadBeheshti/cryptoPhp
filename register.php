@@ -2,16 +2,32 @@
 include('dbconfig.php');
 
 
+$getUser = "SELECT * FROM `users`";
+$getUsers = $conn->query($getUser);
+
 if (isset($_POST['insert'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
     $birthDay = $_POST['birth'];
     $name = $_POST['name'];
     $family = $_POST['family'];
-  
+    $validUser = false;
+    $i = 0;
+    foreach ($getUsers as $row) {
+        $i++;
+        if($username == $row['username'] ){
+            $validUser = true;
+            echo '<script>alert("نام کاربری تکراری می باشد")</script>';
+        }else{
+            $validUser = false;
+        }
+    }
+    var_dump($i);
+
     $sql = function () use (&$username, &$password , &$birthDay  ,&$name , &$family) {
         return "INSERT INTO `users`(`isAdmin`, `username`, `password` , `birth` , `name` , `family`) VALUES (false , '$username' , '$password' , '$birthDay' , '$name' , '$family')";
     };
+
     $finalSql = $sql();
     $conn->query($finalSql);
     setcookie("userAuth", "false", time() + 2 * 24 * 60 * 60);
