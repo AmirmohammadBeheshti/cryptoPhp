@@ -8,6 +8,7 @@ if (isset($_POST['insert'])) {
     $birthDay = $_POST['birth'];
     $name = $_POST['name'];
     $family = $_POST['family'];
+  
     $sql = function () use (&$username, &$password , &$birthDay  ,&$name , &$family) {
         return "INSERT INTO `users`(`isAdmin`, `username`, `password` , `birth` , `name` , `family`) VALUES (false , '$username' , '$password' , '$birthDay' , '$name' , '$family')";
     };
