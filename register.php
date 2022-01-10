@@ -12,26 +12,43 @@ if (isset($_POST['insert'])) {
     $name = $_POST['name'];
     $family = $_POST['family'];
     $validUser = false;
-    $i = 0;
+    $getUserId = 0;
+    $getUserName = '';
     foreach ($getUsers as $row) {
-        if($username == $row['username'] ){
+        if ($username == $row['username']) {
             $validUser = true;
             echo '<script>alert("نام کاربری تکراری می باشد")</script>';
-        }else{
+            break;
+        } else {
             $validUser = false;
         }
     }
+    if (!$validUser) {
 
-    $sql = function () use (&$username, &$password , &$birthDay  ,&$name , &$family) {
-        return "INSERT INTO `users`(`isAdmin`, `username`, `password` , `birth` , `name` , `family`) VALUES (false , '$username' , '$password' , '$birthDay' , '$name' , '$family')";
-    };
 
-    $finalSql = $sql();
-    $conn->query($finalSql);
-    setcookie("userAuth", "false", time() + 2 * 24 * 60 * 60);
-    echo '<script>
+        $sql = function () use (&$username, &$password, &$birthDay, &$name, &$family) {
+            return "INSERT INTO `users`(`isAdmin`, `username`, `password` , `birth` , `name` , `family`) VALUES (false , '$username' , '$password' , '$birthDay' , '$name' , '$family')";
+        };
+
+        $finalSql = $sql();
+        $conn->query($finalSql);
+        $getNewUserSql = "SELECT * FROM `users`";
+        $getNewUser = $conn->query($getNewUserSql);
+                foreach ($getNewUser as $row) {
+                    $getUserId = $row['id'];
+                    $getUserName = $row['username'];
+                }
+        $insertWalletSql = function () use (&$getUserId, &$getUserName) {
+            return "INSERT INTO `wallet`(`coin_name`, `value` , `user_id` , `username`) VALUES ('amirCoin' , 0 , $getUserId  , '$getUserName')";
+        };
+
+        $insertWallet = $insertWalletSql();
+        $conn->query($insertWallet);
+        setcookie("userAuth", "false", time() + 2 * 24 * 60 * 60);
+        echo '<script>
     alert("ثبت نام با موفقیت انجام شد");
     </script>';
+    }
 }
 ?>
 
@@ -53,7 +70,7 @@ if (isset($_POST['insert'])) {
             <div class="card-body">
                 <h5 class="text-color border-bottom pt-1 pb-3">ثبت نام</h5>
                 <div class="pt-2"></div>
-                <form method="post" autocomplete="false" >
+                <form method="post" autocomplete="false">
                     <div class="form-group">
                         <label for="exampleInputEmail1">نام کاربری را وارد کنید</label>
                         <input autocomplete="false" type="text" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="نام کاربری">
@@ -79,7 +96,7 @@ if (isset($_POST['insert'])) {
                         <small id="emailHelp" class="form-text text-muted"> لطفا رمز عبور خود را وارد کنید</small>
                     </div>
 
-                    <input type="submit" class="btn btn-success w-100" name="insert" value="ثبت نام"/>
+                    <input type="submit" class="btn btn-success w-100" name="insert" value="ثبت نام" />
                     <a href="login.php" class="btn btn-primary mt-3">ورود</a>
                 </form>
             </div>
