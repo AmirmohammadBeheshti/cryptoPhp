@@ -47,6 +47,7 @@ if (isset($_POST['insert'])) {
         setcookie("userAuth", "false", time() + 2 * 24 * 60 * 60);
         echo '<script>
     alert("ثبت نام با موفقیت انجام شد");
+    window.location.href= "login.php" ;
     </script>';
     }
 }
