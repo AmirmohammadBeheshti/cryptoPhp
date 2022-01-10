@@ -15,6 +15,7 @@ if (isset($_POST['loginBtn'])) {
     foreach ($getResult as $row) {
         $i++;
         setcookie("userid", $row['id'], time() + 2 * 24 * 60 * 60);
+        setcookie("isAdmin", $row['isAdmin'], time() + 2 * 24 * 60 * 60);
     }
     if ($i !== 0) {
         setcookie("userAuth", "true", time() + 2 * 24 * 60 * 60);

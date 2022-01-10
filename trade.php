@@ -1,3 +1,8 @@
+<?php
+
+include('dbconfig.php');
+include('authenticateUser.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,8 +16,8 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg cardColor">
-        <a class="text-gray ml-4 nav-title-font " href="/">صرافی دیجیتال امیر
+<nav class="navbar navbar-expand-lg cardColor">
+        <a class="text-gray ml-4 nav-title-font " href="index.php">صرافی دیجیتال امیر
             <span class="border-left mr-3"></span>
         </a>
         <div class=""></div>
@@ -26,42 +31,67 @@
                 <a class="nav-item nav-link nav-item-size" href="add_order.php">ثبت سفارش</a>
                 <a class="nav-item nav-link nav-item-size" href="order.php">سفارشات</a>
                 <a class="nav-item nav-link nav-item-size" href="trade.php">معاملات</a>
+                <?php if ($isAdmin) { ?>
+                    <a class="nav-item nav-link nav-item-size" href="all_order.php">همه سفارشات</a>
+                    <a class="nav-item nav-link nav-item-size" href="all_trade.php">همه معاملات</a>
+                    <a class="nav-item nav-link nav-item-size" href="users.php">کاربران</a>
+                <? }
+                ?>
+                <a class="nav-item nav-link nav-item-size text-danger" href="login.php">خروج</a>
             </div>
         </div>
     </nav>
+    <div class="title_border">
+        معاملات
+    </div>
     <div class="container">
         <div class="card text-center d-block mr-auto ml-auto mt-5 cardColor shdow box-shadow text-white">
             <div class="card-body">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">شماره سفارش</th>
+                        <th scope="col">شماره معامله</th>
+                        <th scope="col">شماره سفارش</th>
+                        <th scope="col">شماره کاربری</th>
+                          
+                            <th scope="col">نام ارز</th>
                             <th scope="col">نام ارز</th>
                             <th scope="col">مقدار ارز</th>
-                            <th scope="col">موجودی کیف پول</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
+                       
+
+                    <?php
+                        $userId = $_COOKIE["userid"];
+                        $sql = function () use (&$userId) {
+                            return "SELECT * FROM `trade` WHERE user_id=$userId ORDER By trade_id DESC LIMIT 25";
+                        };
+                        $finalSql = $sql();
+                        $getResult = $conn->query($finalSql);
+                        $i = 0;
+                        foreach ($getResult as $row) {
+                            $i++;
+                        ?>
+                            <tr>
+                                <td><?php echo $row['trade_id'] ?></td>
+                                <th><?php echo $row['order_id'] ?></th>
+                                <th scope="row"><?php echo $row['user_id'] ?></th>
+                                <td><?php echo $row['value'] ?></td>
+                                <td><?php echo $row['coin_name'] ?></td>
+                                <td><?php echo $row['price'] ?></td>
+
+                         
+                            </tr>
+
+                        <? }
+                        ?>
+
+
+
                     </tbody>
                 </table>
+                <a class="btn btn-primary w-100" href="order.php">سفارشات</a>
             </div>
         </div>
     </div>

@@ -8,7 +8,6 @@ $sql = function () use (&$getUserId) {
     return "SELECT * FROM  `users` WHERE id=$getUserId";
 };
 
-
 // echo $nameValue;
 $finalSql = $sql();
 $getResult = $conn->query($finalSql);
@@ -48,8 +47,8 @@ foreach ($getResult as $row) {
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg cardColor">
-        <a class="text-gray ml-4 nav-title-font " href="/">صرافی دیجیتال امیر
+<nav class="navbar navbar-expand-lg cardColor">
+        <a class="text-gray ml-4 nav-title-font " href="index.php">صرافی دیجیتال امیر
             <span class="border-left mr-3"></span>
         </a>
         <div class=""></div>
@@ -63,9 +62,19 @@ foreach ($getResult as $row) {
                 <a class="nav-item nav-link nav-item-size" href="add_order.php">ثبت سفارش</a>
                 <a class="nav-item nav-link nav-item-size" href="order.php">سفارشات</a>
                 <a class="nav-item nav-link nav-item-size" href="trade.php">معاملات</a>
+                <?php if ($isAdmin) { ?>
+                    <a class="nav-item nav-link nav-item-size" href="all_order.php">همه سفارشات</a>
+                    <a class="nav-item nav-link nav-item-size" href="all_trade.php">همه معاملات</a>
+                    <a class="nav-item nav-link nav-item-size" href="users.php">کاربران</a>
+                <? }
+                ?>
+                <a class="nav-item nav-link nav-item-size text-danger" href="login.php">خروج</a>
             </div>
         </div>
     </nav>
+    <div class="title_border">
+        اطلاعات کاربری
+    </div>
     <div class="container">
         <div class="card text-center d-block mr-auto ml-auto mt-5 cardColor shdow box-shadow text-white">
             <div class="card-body">
@@ -100,11 +109,15 @@ foreach ($getResult as $row) {
                     <div class="col-md-6 col-sm-12 col-xs-12 mt-5">
                         <a href="wallet.php" class="btn btn-primary w-100">کیف پول</a>
                     </div>
+                    <div class="col-12 mt-md-3 mt-5">
+                        <a href="login.php" class="btn btn-danger w-100 ">خروج از حساب کاربری</a>
+                    </div>
 
                 </div>
             </div>
         </div>
     </div>
+
 </body>
 
 </html>

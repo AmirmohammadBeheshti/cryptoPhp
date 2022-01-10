@@ -1,31 +1,7 @@
 <?php
+
 include('dbconfig.php');
 include('authenticateUser.php');
-
-
-$getUserId = $_COOKIE['userid'];
-$sql = function () use (&$getUserId) {
-    return "SELECT * FROM  `wallet` WHERE user_id=$getUserId";
-};
-
-$finalSql = $sql();
-$getResult = $conn->query($finalSql);
-$coin_name = '';
-$value = 0;
-$userId = 0;
-$username = '';
-
-$i = 0;
-foreach ($getResult as $row) {
-    $i++;
-    $coin_name =  $row['coin_name'];
-    $value = $row['value'];
-    $userId = $row['user_id'];
-    $username = $row['username'];
-
-}
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +16,7 @@ foreach ($getResult as $row) {
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg cardColor">
+    <nav class="navbar navbar-expand-lg cardColor">
         <a class="text-gray ml-4 nav-title-font " href="index.php">صرافی دیجیتال امیر
             <span class="border-left mr-3"></span>
         </a>
@@ -66,37 +42,63 @@ foreach ($getResult as $row) {
         </div>
     </nav>
     <div class="title_border">
-        کیف پول 
+        کاربران
     </div>
     <div class="container">
         <div class="card text-center d-block mr-auto ml-auto mt-5 cardColor shdow box-shadow text-white">
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6 col-sm-12 col-xs-12">
-                        <span>نام ارز : </span>
-                        <span class="primart-text"> <?php echo $coin_name ?> </span>
-                    </div>
-                    <div class="col-md-6 col-sm-12 col-xs-12 mt-md-0 mt-5">
-                        <span>موجودی کیف پول :</span>
-                        <span class="primart-text"><?php echo $value ?> </span>
-                    </div>
-                    <div class="col-md-6 col-sm-12 col-xs-12 mt-5">
-                        <span>شماره کاربری :</span>
-                        <span class="primart-text"><?php echo $userId ?> </span>
-                    </div>
-                    <div class="col-md-6 col-sm-12 col-xs-12 mt-5">
-                        <span>نام کاربری :</span>
-                        <span class="primart-text"><?php echo $username ?> </span>
-                    </div>
-            
-                    <div class="col-md-6 col-sm-12 col-xs-12 mt-5">
-                        <a href="order.php" class="btn btn-success w-100">سفارشات</a>
-                    </div>
-                    <div class="col-md-6 col-sm-12 col-xs-12 mt-5">
-                    <a href="trade.php" class="btn btn-primary w-100">معاملات</a>
-                    </div>
-                    
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col"> شماره کاربری</th>
+                            <th scope="col">نام کاربری</th>
+                            <th scope="col">نام </th>
 
+                            <th scope="col">نام خانوادگی</th>
+                            <th scope="col">تاریخ تولد</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+                        <?php
+                        $userId = $_COOKIE["userid"];
+                        $sql = function () use (&$userId) {
+                            return "SELECT * FROM `users`";
+                        };
+                        $finalSql = $sql();
+                        $getResult = $conn->query($finalSql);
+                        $i = 0;
+                        foreach ($getResult as $row) {
+                            $i++;
+                            if (!$row['isAdmin']) {
+
+                        ?>
+                                <tr>
+                                    <td><?php echo $row['id'] ?></td>
+                                    <th><?php echo $row['username'] ?></th>
+                                    <th scope="row"><?php echo $row['name'] ?></th>
+                                    <td><?php echo $row['family'] ?></td>
+                                    <td><?php echo $row['birth'] ?></td>
+
+
+                                </tr>
+
+                        <? }
+                        }
+                        ?>
+
+
+
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-md-6 col-12">
+                        <a class="btn btn-primary w-100" href="all_order.php">همه سفارشات</a>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <a class="btn btn-success w-100" href="all_trade.php">همه معاملات</a>
+                    </div>
                 </div>
             </div>
         </div>

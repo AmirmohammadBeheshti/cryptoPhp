@@ -2,3 +2,9 @@
 * user panel 
 * admin panel
 * Git panelversion
+1-status {
+    1- pending 
+    2- confirmed
+    3-reject
+}
+* add the user wallet after register

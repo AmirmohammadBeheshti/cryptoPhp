@@ -82,6 +82,9 @@ body{
 .text-color{
     color : var(--textColor) !important;
 }
+.text_green{
+  color : green !important;
+}
 .border-bottom {
     border-bottom: 2px dotted var(--primary) !important;
 }
@@ -94,4 +97,26 @@ body{
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+}
+.status_label{
+  background: var(--primary);
+  padding: 3px;
+  border-radius: 7px;
+}
+.title_border{
+  border-bottom: 3px dotted var(--primary) !important;
+  width: fit-content;
+  margin-right: 20px;
+  padding-bottom: 11px;
+  margin-top: 20px;
+}
+.table_btn_icon{
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  padding: 9px;
+  width: 50px;
 }
